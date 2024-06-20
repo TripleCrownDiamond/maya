@@ -27,7 +27,10 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  if (message.channel.id === process.env.CUISINE_CHANNEL_ID) {
+  if (
+    message.channel.id === process.env.CUISINE_CHANNEL_ID ||
+    message.channel.id === process.env.PRESENTATION_CHANNEL_ID
+  ) {
     try {
       const isNewAuthor = !authorsSeen.has(message.author.id);
 
