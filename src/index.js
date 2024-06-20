@@ -17,6 +17,20 @@ const authorsSeen = new Set();
 let clientId = "";
 let clientUsername = "";
 
+// Reconnaissance automatique
+const keepAlive = () => {
+  const app = express();
+  const PORT = process.env.PORT || 3000;
+
+  app.get("/", (req, res) => {
+    res.send("Bot is running");
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
+  });
+};
+
 client.on("ready", () => {
   console.log(`✅ ${client.user.tag} is online.`);
 
@@ -35,7 +49,7 @@ client.on("interactionCreate", (interaction) => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  if (message.channel.id === process.env.PRESENTATION_CHANNEL_ID) {
+  if (message.channel.id === process.env.CUISINE_CHANNEL_ID) {
     try {
       const isNewAuthor = !authorsSeen.has(message.author.id);
 
@@ -74,14 +88,5 @@ client.on("messageCreate", async (message) => {
 
 client.login(process.env.TOKEN);
 
-// Serveur HTTP minimal
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.get("/", (req, res) => {
-  res.send("Bot is running");
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
+// Ajout de la fonction keepAlive
+keepAlive();
