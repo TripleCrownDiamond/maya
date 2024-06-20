@@ -29,26 +29,14 @@ const { REST, Routes, ApplicationCommandOptionType } = require("discord.js");
 
 const commands = [
   {
-    name: "add",
-    description: "Additionne 2 nombres.",
-    options: [
-      {
-        name: "nombre1",
-        description: "Premier nombre",
-        required: true,
-        type: ApplicationCommandOptionType.Number,
-      },
-      {
-        name: "nombre2",
-        description: "Deuxième nombre",
-        required: true,
-        type: ApplicationCommandOptionType.Number,
-      },
-    ],
+    name: "embed",
+    description: "Crée un embed avec les informations que vous fournissez.",
   },
 ];
 
-const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
+const rest = new REST({ version: "10" }).setToken(
+  process.env.TESTING_BOT_TOKEN
+);
 
 (async () => {
   try {
@@ -56,7 +44,7 @@ const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
     await rest.put(
       Routes.applicationGuildCommands(
-        process.env.CLIENT_ID,
+        process.env.TESTING_BOT_ID,
         process.env.GUILD_ID
       ),
       { body: commands }

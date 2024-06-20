@@ -1,6 +1,6 @@
 require("dotenv").config();
-const express = require("express");
-const { Client, IntentsBitField } = require("discord.js");
+const keepAlive = require("./server");
+const { Client, IntentsBitField, EmbedBuilder } = require("discord.js");
 const keywords = require("./utils/welcome_messages_keywords");
 
 const client = new Client({
@@ -17,33 +17,11 @@ const authorsSeen = new Set();
 let clientId = "";
 let clientUsername = "";
 
-// Reconnaissance automatique
-const keepAlive = () => {
-  const app = express();
-  const PORT = process.env.PORT || 3000;
-
-  app.get("/", (req, res) => {
-    res.send("Bot is running");
-  });
-
-  app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-  });
-};
-
 client.on("ready", () => {
   console.log(`✅ ${client.user.tag} is online.`);
 
   clientUsername = client.user.username;
   clientId = client.user.id;
-});
-
-client.on("interactionCreate", (interaction) => {
-  if (!interaction.isCommand()) return;
-  if (interaction.commandName === "test_de_connaissances") {
-    const subject = interaction.options.getString("sujet");
-    console.log(subject);
-  }
 });
 
 client.on("messageCreate", async (message) => {
