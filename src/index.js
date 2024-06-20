@@ -16,6 +16,8 @@ const authorsSeen = new Set();
 let clientId = "";
 let clientUsername = "";
 
+const PORT = process.env.PORT || 3000; // Utilisation du port défini par Render ou le port 3000 par défaut
+
 client.on("ready", () => {
   console.log(`✅ ${client.user.tag} is online.`);
 
